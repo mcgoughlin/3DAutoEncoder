@@ -19,7 +19,6 @@ from ovseg.augmentation.SegmentationAugmentation import SegmentationAugmentation
 from ovseg.data.AutoEncoderData import AutoEncoderData
 from ovseg.data.Dataset import raw_Dataset
 from ovseg.networks.AutoEncoder import AutoEncoder
-from ovseg.networks.refine_res_networks import RefineResNet
 from ovseg.training.AugmentationTraining import AugmentationTraining, AugmentationTrainingV2
 from ovseg.prediction.SlidingWindowPrediction import SlidingWindowPrediction
 from ovseg.postprocessing.AutoEncoderPostprocessing import AutoEncoderPostprocessing
