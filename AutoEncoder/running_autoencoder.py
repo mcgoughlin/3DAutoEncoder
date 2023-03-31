@@ -17,7 +17,7 @@ spacing = 4.0
 preprocessed_name = '{}mm_AE'.format(spacing)
 model_name = 'test'
 
-vfs = [0]
+vfs = [0,1,2,3,4]
 lb_classes = [1]
 
 target_spacing=[spacing,spacing,spacing]
@@ -56,7 +56,7 @@ kits19ncct_dataset_properties ={
 z_to_xy_ratio = 1
 larger_res_encoder = True
 n_fg_classes = 1
-patch_size = [32,32,32]
+patch_size = [9,9,9]
 
 model_params = get_model_params_3d_res_encoder_U_Net(patch_size,
                                                      z_to_xy_ratio=z_to_xy_ratio,
@@ -64,11 +64,11 @@ model_params = get_model_params_3d_res_encoder_U_Net(patch_size,
                                                      use_prg_trn=False)
 
 
-model_params['network']['kernel_sizes'] =5*[(3,3,3)]
+model_params['network']['kernel_sizes'] =3*[(3,3,3)]
 model_params['network']['norm'] = 'inst'
 model_params['network']['in_channels']=1
-model_params['network']['filters']=8
-model_params['network']['filters_max']=32
+model_params['network']['filters']=32
+model_params['network']['filters_max']=500
 del model_params['network']['block']
 del model_params['network']['z_to_xy_ratio']
 del model_params['network']['n_blocks_list']
@@ -79,13 +79,13 @@ lr=0.0001
 model_params['data']['folders'] = ['images']#, 'masks']
 model_params['data']['keys'] = ['image']#, 'mask']
 
-model_params['training']['num_epochs'] = 50
+model_params['training']['num_epochs'] = 100
 model_params['training']['opt_name'] = 'ADAM'
 model_params['training']['opt_params'] = {'lr': lr,
                                             'betas': (0.95, 0.9),
                                             'eps': 1e-08}
 model_params['training']['lr_params'] = {'n_warmup_epochs': 5, 'lr_max': 0.005}
-model_params['data']['trn_dl_params']['epoch_len']=500
+model_params['data']['trn_dl_params']['epoch_len']=1000
 model_params['data']['trn_dl_params']['padded_patch_size']=[2*patch_size[0]]*3
 model_params['data']['val_dl_params']['padded_patch_size']=[2*patch_size[0]]*3
 model_params['training']['lr_schedule'] = 'lin_ascent_log_decay'
@@ -93,7 +93,7 @@ model_params['training']['lr_exponent'] = 4
 model_params['training']['loss_params'] = {'loss_names':['mse_loss'], 
                                            'loss_weights':[1]}
 model_params['data']['trn_dl_params']['batch_size']=16
-model_params['data']['val_dl_params']['epoch_len']=50
+model_params['data']['val_dl_params']['epoch_len']=100
 # model_params['postprocessing'] = {'mask_with_reg': True}
 
 for vf in vfs:

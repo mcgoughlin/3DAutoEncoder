@@ -205,9 +205,8 @@ class AutoEncoder(nn.Module):
         self.stem_kernel_size = stem_kernel_size
 
         
-        # we double the amount of channels every downsampling step
-        # up to a max of filters_max
-        self.filters_list = [min([self.filters*2**i, self.filters_max])
+        # we half the amount of channels every downsampling step
+        self.filters_list = [max([self.filters//(4**i), 1])
                              for i in range(self.n_stages)]
         self.out_channels_down_list = self.filters_list
         self.skip_channels = [int(self.fac_skip_channels * ch)
